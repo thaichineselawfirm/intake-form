@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบฟอร์มรับลูกค้าใหม่ — บริษัทกฎหมาย</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@300;400;600;700&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap');
+
+:root {
+  --navy: #0F2744;
+  --navy2: #1A3A5C;
+  --gold: #B8970A;
+  --gold2: #D4AF37;
+  --gold-light: #FDF8E8;
+  --cream: #FAFAF7;
+  --white: #FFFFFF;
+  --slate: #4A5568;
+  --muted: #718096;
+  --border: #D4C89A;
+  --border2: #E8E0C8;
+  --input-bg: #FEFEF9;
+  --section-bg: #F8F6EF;
+  --red: #8B2020;
+  --red-light: #FDF0F0;
+  --green: #1A5C3A;
+  --green-light: #EEF8F3;
+  --shadow: 0 2px 12px rgba(15,39,68,0.08);
+  --shadow-lg: 0 8px 32px rgba(15,39,68,0.14);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans Thai', 'Sarabun', sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── PRINT ── */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; font-size: 12px; }
+  .page-wrap { max-width: none; padding: 0; margin: 0; }
+  .card { box-shadow: none; border: 1px solid #CCC; page-break-inside: avoid; margin-bottom: 14px; }
+  .top-bar, .form-footer { background: #0F2744 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ── TOP BAR ── */
+.top-bar {
+  background: var(--navy);
+  color: var(--white);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.top-bar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--gold2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.logo-text { font-size: 15px; font-weight: 600; letter-spacing: 0.3px; }
+.logo-sub { font-size: 11px; opacity: 0.65; margin-top: 1px; }
+.top-actions { display: flex; gap: 10px; }
+.top-btn {
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s;
+  border: none;
+}
+.top-btn.outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: white;
+}
+.top-btn.outline:hover { background: rgba(255,255,255,0.1); }
+.top-btn.gold {
+  background: var(--gold2);
+  color: var(--navy);
+}
+.top-btn.gold:hover { background: #C8A020; }
+
+/* ── PAGE ── */
+.page-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+/* ── HERO HEADER ── */
+.form-hero {
+  background: var(--navy2);
+  border-radius: 14px;
+  padding: 32px 36px;
+  color: white;
+  margin-bottom: 22px;
+  position: relative;
+  overflow: hidden;
+}
+.form-hero::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 160px; height: 160px;
+  background: var(--gold2);
+  opacity: 0.06;
+  border-radius: 50%;
+}
+.form-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -50px; left: -20px;
+  width: 200px; height: 200px;
+  background: var(--gold2);
+  opacity: 0.04;
+  border-radius: 50%;
+}
+.form-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(212,175,55,0.2);
+  color: var(--gold2);
+  border: 1px solid rgba(212,175,55,0.35);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+.form-hero h1 {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.form-hero p {
+  font-size: 14px;
+  opacity: 0.75;
+  max-width: 520px;
+  line-height: 1.7;
+}
+.hero-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  background: white;
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: var(--slate);
+}
+.progress-label strong { color: var(--navy); }
+.progress-bar {
+  height: 6px;
+  background: #E8E4D8;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--navy2), var(--gold));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.steps-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+.step-dot {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: #E8E4D8;
+  transition: background 0.3s;
+}
+.step-dot.active { background: var(--navy2); }
+.step-dot.done { background: var(--gold); }
+
+/* ── CARD ── */
+.card {
+  background: white;
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-hdr {
+  background: var(--navy);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.card-num {
+  width: 28px; height: 28px;
+  background: var(--gold2);
+  color: var(--navy);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  flex-shrink: 0;
+}
+.card-hdr-text h3 {
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+}
+.card-hdr-text p {
+  color: rgba(255,255,255,0.65);
+  font-size: 12px;
+  margin-top: 1px;
+}
+.card-body { padding: 20px 22px; }
+
+/* ── FORM ELEMENTS ── */
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--slate);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.field label .req { color: var(--red); font-size: 14px; }
+.field label .opt { color: var(--muted); font-size: 11px; font-weight: 400; }
+
+input[type=text], input[type=email], input[type=tel], input[type=date],
+input[type=number], select, textarea {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid var(--border2);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--navy);
+  background: var(--input-bg);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  line-height: 1.5;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--navy2);
+  box-shadow: 0 0 0 3px rgba(26,58,92,0.1);
+  background: white;
+}
+textarea { resize: vertical; min-height: 80px; }
+select { cursor: pointer; }
+
+.field-hint {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 2px;
+}
+
+/* ── SECTION LABEL ── */
+.sec-lbl {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 18px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sec-lbl::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border2);
+}
+
+/* ── CHECKBOX GRID ── */
+.check-grid { display: grid; gap: 8px; }
+.check-grid.col2 { grid-template-columns: 1fr 1fr; }
+.check-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--input-bg);
+}
+.check-item:hover { border-color: var(--navy2); background: var(--section-bg); }
+.check-item input[type=checkbox], .check-item input[type=radio] {
+  width: 17px; height: 17px;
+  flex-shrink: 0;
+  accent-color: var(--navy2);
+  cursor: pointer;
+  margin-top: 1px;
+}
+.check-item.checked {
+  border-color: var(--navy2);
+  background: #EBF2FC;
+}
+.check-label { font-size: 13px; font-weight: 500; line-height: 1.4; }
+.check-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* ── DOC CHECKLIST ── */
+.doc-list { display: flex; flex-direction: column; gap: 8px; }
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border2);
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--input-bg);
+  transition: all 0.15s;
+}
+.doc-item:hover { border-color: var(--navy2); }
+.doc-item input { width: 17px; height: 17px; accent-color: var(--green); flex-shrink: 0; }
+.doc-item.has-doc { border-color: #90C8A8; background: var(--green-light); }
+.doc-item.no-doc { opacity: 0.6; }
+.doc-title { font-size: 13px; font-weight: 500; flex: 1; }
+.doc-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.doc-badge.required { background: #FAE0E0; color: var(--red); }
+.doc-badge.optional { background: #EDF2F7; color: var(--slate); }
+
+/* ── PRIORITY SELECTOR ── */
+.priority-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.pri-card {
+  padding: 12px 10px;
+  border: 2px solid var(--border2);
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--input-bg);
+}
+.pri-card:hover { transform: translateY(-1px); }
+.pri-card.selected { border-color: var(--navy2); background: #EBF2FC; }
+.pri-icon { font-size: 22px; margin-bottom: 6px; }
+.pri-name { font-size: 12px; font-weight: 600; }
+.pri-desc { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.pri-card[data-level="urgent"].selected { border-color: #C0392B; background: #FFF0EE; }
+.pri-card[data-level="high"].selected { border-color: #E67E22; background: #FEF5E7; }
+.pri-card[data-level="normal"].selected { border-color: var(--navy2); background: #EBF2FC; }
+.pri-card[data-level="low"].selected { border-color: var(--green); background: var(--green-light); }
+
+/* ── REF NUMBER ── */
+.ref-box {
+  background: var(--gold-light);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.ref-label { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+.ref-num { font-size: 20px; font-weight: 700; color: var(--navy); letter-spacing: 1px; }
+.ref-date { font-size: 12px; color: var(--muted); text-align: right; }
+
+/* ── NOTE BOX ── */
+.note-box {
+  background: var(--section-bg);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 15px;
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.7;
+  margin: 14px 0;
+}
+.note-box strong { color: var(--navy); }
+
+/* ── FOOTER ── */
+.form-footer {
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+.form-footer-text { color: rgba(255,255,255,0.7); font-size: 13px; }
+.form-footer-actions { display: flex; gap: 10px; }
+
+.btn {
+  padding: 11px 24px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--gold2); color: var(--navy); }
+.btn-primary:hover { background: #C8A020; }
+.btn-outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.35); color: white; }
+.btn-outline:hover { background: rgba(255,255,255,0.1); }
+.btn-success { background: var(--green); color: white; }
+.btn-success:hover { background: #155030; }
+
+/* ── SUCCESS SCREEN ── */
+.success-screen {
+  display: none;
+  background: white;
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 48px 36px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  margin-top: 20px;
+}
+.success-icon {
+  width: 72px; height: 72px;
+  background: var(--green-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 34px;
+  margin: 0 auto 20px;
+}
+.success-screen h2 {
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 24px;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+.success-screen p { color: var(--muted); font-size: 14px; line-height: 1.7; }
+.success-ref {
+  display: inline-block;
+  background: var(--gold-light);
+  border: 1.5px solid var(--border);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 1px;
+  margin: 16px 0;
+}
+.success-next {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .top-bar { padding: 0 16px; }
+  .page-wrap { padding: 16px 14px 50px; }
+  .form-hero { padding: 22px 20px; }
+  .card-body { padding: 16px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .check-grid.col2, .check-grid.col3 { grid-template-columns: 1fr; }
+  .priority-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-footer { flex-direction: column; }
+  .form-footer-actions { width: 100%; }
+  .form-footer-actions .btn { flex: 1; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar no-print">
+  <div class="top-bar-logo">
+    <div class="logo-icon">⚖</div>
+    <div>
+      <div class="logo-text">บริษัทกฎหมาย</div>
+      <div class="logo-sub">Client Intake Form</div>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="top-btn outline" onclick="clearForm()">↺ ล้างฟอร์ม</button>
+    <button class="top-btn outline" onclick="saveDraft()">💾 บันทึกร่าง</button>
+    <button class="top-btn gold" onclick="window.print()">🖨 พิมพ์</button>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- HERO -->
+  <div class="form-hero">
+    <div class="form-hero-tag">⚖ แบบฟอร์มอย่างเป็นทางการ</div>
+    <h1>แบบฟอร์มรับลูกค้าใหม่</h1>
+    <p>กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง เพื่อให้ทีมทนายความสามารถประเมินและดูแลท่านได้อย่างเหมาะสมที่สุด</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">📋 7 ส่วน</div>
+      <div class="hero-meta-item">⏱ ใช้เวลาประมาณ 5–8 นาที</div>
+      <div class="hero-meta-item">🔒 ข้อมูลเป็นความลับ</div>
+    </div>
+  </div>
+
+  <!-- REF -->
+  <div class="ref-box no-print">
+    <div>
+      <div class="ref-label">รหัสอ้างอิง</div>
+      <div class="ref-num" id="ref-num">CL-20260404-001</div>
+    </div>
+    <div class="ref-date">
+      <div id="today-date"></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:3px">วันที่กรอกแบบฟอร์ม</div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap no-print">
+    <div class="progress-label">
+      <span>ความสมบูรณ์ของข้อมูล</span>
+      <strong id="pct-lbl">0%</strong>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="steps-row" id="steps-row"></div>
+  </div>
+
+  <form id="intake-form" novalidate>
+
+  <!-- SECTION 1: BASIC INFO -->
+  <div class="card" data-section="1">
+    <div class="card-hdr">
+      <div class="card-num">1</div>
+      <div class="card-hdr-text">
+        <h3>ข้อมูลส่วนตัวของลูกค้า</h3>
+        <p>กรุณาระบุข้อมูลตามเอกสารราชการ</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-2">
+        <div class="field">
+          <label>ชื่อ-นามสกุล (ภาษาไทย) <span class="req">*</span></label>
+          <input type="text" id="f-name-th" placeholder="เช่น นาย สมชาย ใจดี" required>
+        </div>
+        <div class="field">
+          <label>Name (English) <span class="opt">ถ้ามี</span></label>
+          <input type="text" id="f-name-en" placeholder="e.g. Mr. Somchai Jaidee">
+        </div>
+      </div>
+      <div class="grid grid-3" style="margin-top:14px">
+        <div class="field">
+          <label>สัญชาติ <span class="req">*</span></label>
+          <select id="f-nationality">
+            <option value="">เลือกสัญชาติ</option>
+            <option value="ไทย">ไทย</option>
+            <option value="จีน">จีน (Chinese)</option>
+            <option value="อังกฤษ">อังกฤษ (British)</option>
+            <option value="อเมริกัน">อเมริกัน (American)</option>
+            <option value="ญี่ปุ่น">ญี่ปุ่น (Japanese)</option>
+            <option value="เกาหลี">เกาหลี (Korean)</option>
+            <option value="อื่นๆ">อื่นๆ / Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>ประเภทลูกค้า <span class="req">*</span></label>
+          <select id="f-client-type">
+            <option value="">เลือก</option>
+            <option value="บุคคลธรรมดา">บุคคลธรรมดา</option>
+            <option value="นิติบุคคล / บริษัท">นิติบุคคล / บริษัท</option>
+            <option value="ห้างหุ้นส่วน">ห้างหุ้นส่วน</option>
+            <option value="องค์กรต่างชาติ">องค์กรต่างชาติ</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>เลขบัตร / Passport <span class="opt">ถ้ามี</span></label>
+          <input type="text" id="f-id" placeholder="เลขบัตรหรือพาสปอร์ต">
+        </div>
+      </div>
+
+      <div class="sec-lbl">ข้อมูลบริษัท (กรณีนิติบุคคล)</div>
+      <div class="grid grid-2">
+        <div class="field">
+          <label>ชื่อบริษัท / องค์กร <span class="opt">ถ้ามี</span></label>
+          <input type="text" id="f-company" placeholder="เช่น บริษัท ABC จำกัด">
+        </div>
+        <div class="field">
+          <label>ตำแหน่งในบริษัท <span class="opt">ถ้ามี</span></label>
+          <input type="text" id="f-position" placeholder="เช่น กรรมการผู้จัดการ">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: CONTACT -->
+  <div class="card" data-section="2">
+    <div class="card-hdr">
+      <div class="card-num">2</div>
+      <div class="card-hdr-text">
+        <h3>ช่องทางการติดต่อ</h3>
+        <p>ระบุอย่างน้อย 1 ช่องทาง</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-2">
+        <div class="field">
+          <label>เบอร์โทรศัพท์ <span class="req">*</span></label>
+          <input type="tel" id="f-phone" placeholder="เช่น 089-123-4567">
+        </div>
+        <div class="field">
+          <label>LINE ID <span class="opt">ถ้ามี</span></label>
+          <input type="text" id="f-line" placeholder="LINE ID">
+        </div>
+        <div class="field">
+          <label>WeChat / WhatsApp <span class="opt">ถ้ามี</span></label>
+          <input type="text" id="f-wechat" placeholder="WeChat / WhatsApp ID">
+        </div>
+        <div class="field">
+          <label>อีเมล <span class="opt">ถ้ามี</span></label>
+          <input type="email" id="f-email" placeholder="example@email.com">
+        </div>
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label>ที่อยู่ปัจจุบัน <span class="opt">ถ้ามี</span></label>
+        <textarea id="f-address" placeholder="บ้านเลขที่ ถนน แขวง/ตำบล เขต/อำเภอ จังหวัด รหัสไปรษณีย์" rows="2"></textarea>
+      </div>
+
+      <div class="sec-lbl">ช่องทางการสื่อสารที่ต้องการ</div>
+      <div class="check-grid col3">
+        <label class="check-item">
+          <input type="checkbox" value="LINE"> <div><div class="check-label">LINE</div><div class="check-sub">แนะนำสำหรับไทย</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" value="โทรศัพท์"> <div><div class="check-label">โทรศัพท์</div><div class="check-sub">Direct call</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" value="WeChat"> <div><div class="check-label">WeChat</div><div class="check-sub">สำหรับลูกค้าจีน</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" value="Email"> <div><div class="check-label">Email</div><div class="check-sub">สำหรับเอกสาร</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" value="WhatsApp"> <div><div class="check-label">WhatsApp</div><div class="check-sub">International</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" value="พบที่สำนักงาน"> <div><div class="check-label">พบที่สำนักงาน</div><div class="check-sub">นัดหมาย</div></div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: SERVICE -->
+  <div class="card" data-section="3">
+    <div class="card-hdr">
+      <div class="card-num">3</div>
+      <div class="card-hdr-text">
+        <h3>ประเภทบริการที่ต้องการ</h3>
+        <p>เลือกได้มากกว่า 1 ประเภท</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="check-grid col2">
+        <label class="check-item">
+          <input type="checkbox" name="service" value="คดีความ/ว่าความ">
+          <div><div class="check-label">⚖️ คดีความ / ว่าความ</div><div class="check-sub">คดีแพ่ง คดีอาญา คดีแรงงาน คดีปกครอง</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="service" value="ที่ปรึกษากฎหมาย (Retainer)">
+          <div><div class="check-label">🤝 ที่ปรึกษากฎหมาย (Retainer)</div><div class="check-sub">ที่ปรึกษารายเดือน / รายปี</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="service" value="ร่าง/ตรวจสอบสัญญา">
+          <div><div class="check-label">📋 ร่าง / ตรวจสอบสัญญา</div><div class="check-sub">สัญญาซื้อขาย NDA MOA MOU</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="service" value="จดทะเบียนบริษัท">
+          <div><div class="check-label">🏢 จดทะเบียนบริษัท / ธุรกิจ</div><div class="check-sub">จัดตั้ง แก้ไข เพิ่มทุน ยุบเลิก</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="service" value="วีซ่า/Work Permit">
+          <div><div class="check-label">🛂 วีซ่า / Work Permit</div><div class="check-sub">วีซ่าทุกประเภท ต่ออายุ แจ้ง 90 วัน</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="service" value="กฎหมายแรงงาน">
+          <div><div class="check-label">👷 กฎหมายแรงงาน</div><div class="check-sub">สัญญาจ้าง เลิกจ้าง ข้อพิพาทแรงงาน</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="service" value="อสังหาริมทรัพย์">
+          <div><div class="check-label">🏠 อสังหาริมทรัพย์</div><div class="check-sub">ซื้อขาย เช่า โอนกรรมสิทธิ์</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="service" value="ครอบครัว/มรดก">
+          <div><div class="check-label">👨‍👩‍👧 ครอบครัว / มรดก</div><div class="check-sub">หย่า มรดก พินัยกรรม รับบุตรบุญธรรม</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="service" value="ทรัพย์สินทางปัญญา">
+          <div><div class="check-label">💡 ทรัพย์สินทางปัญญา</div><div class="check-sub">ลิขสิทธิ์ เครื่องหมายการค้า สิทธิบัตร</div></div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="service" value="อื่นๆ">
+          <div><div class="check-label">📝 อื่นๆ</div><div class="check-sub">ระบุในช่องรายละเอียด</div></div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: CASE DETAILS -->
+  <div class="card" data-section="4">
+    <div class="card-hdr">
+      <div class="card-num">4</div>
+      <div class="card-hdr-text">
+        <h3>รายละเอียดเรื่องที่ต้องการความช่วยเหลือ</h3>
+        <p>ยิ่งละเอียดยิ่งดี ช่วยให้ทีมทนายเตรียมพร้อมได้ดีขึ้น</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label>สรุปเรื่องโดยย่อ <span class="req">*</span></label>
+        <textarea id="f-summary" placeholder="อธิบายเรื่องที่ต้องการความช่วยเหลือโดยสังเขป เช่น ถูกฟ้องคดีแรงงาน, ต้องการจดทะเบียนบริษัทกับหุ้นส่วนชาวจีน, วีซ่า Non-B ใกล้หมดอายุ..." rows="4" required></textarea>
+      </div>
+      <div class="grid grid-2" style="margin-top:14px">
+        <div class="field">
+          <label>มีคู่กรณีหรือไม่ <span class="req">*</span></label>
+          <select id="f-counterparty">
+            <option value="">เลือก</option>
+            <option value="ไม่มี">ไม่มี (งานเอกสาร/จดทะเบียน)</option>
+            <option value="มีคู่กรณี">มีคู่กรณี</option>
+            <option value="อาจมีคู่กรณี">อาจจะมี (ยังไม่แน่ใจ)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>มีการดำเนินการทางกฎหมายแล้วหรือไม่</label>
+          <select id="f-legal-status">
+            <option value="">เลือก</option>
+            <option value="ยังไม่มี">ยังไม่มี — เพิ่งเริ่มต้น</option>
+            <option value="อยู่ระหว่างเจรจา">อยู่ระหว่างเจรจา</option>
+            <option value="มีการฟ้องร้องแล้ว">มีการฟ้องร้องแล้ว</option>
+            <option value="มีคำพิพากษาแล้ว">มีคำพิพากษาแล้ว</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:14px">
+        <label>ข้อมูลคู่กรณี (ถ้ามี) <span class="opt">ถ้ามี</span></label>
+        <input type="text" id="f-opponent" placeholder="ชื่อบุคคล/บริษัทคู่กรณี หากทราบ">
+      </div>
+
+      <div class="field" style="margin-top:14px">
+        <label>มูลค่าความเสียหายหรือมูลค่าที่เกี่ยวข้อง <span class="opt">ประมาณ</span></label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <input type="number" id="f-value" placeholder="จำนวน (บาท)" min="0">
+          <select id="f-currency">
+            <option value="THB">บาท (THB)</option>
+            <option value="CNY">หยวน (CNY)</option>
+            <option value="USD">ดอลลาร์ (USD)</option>
+            <option value="EUR">ยูโร (EUR)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:14px">
+        <label>ประวัติหรือเอกสารสำคัญที่ผ่านมา <span class="opt">ถ้ามี</span></label>
+        <textarea id="f-history" placeholder="เคยมีทนายความดูแลเรื่องนี้มาก่อนหรือไม่? มีคำสั่ง/หนังสืออะไรที่สำคัญแล้วบ้าง?" rows="3"></textarea>
+      </div>
+
+      <div class="sec-lbl">กำหนดเวลาที่เกี่ยวข้อง</div>
+      <div class="grid grid-2">
+        <div class="field">
+          <label>วันนัดศาล / กำหนดที่สำคัญ <span class="opt">ถ้ามี</span></label>
+          <input type="date" id="f-court-date">
+          <div class="field-hint">เช่น วันนัดศาล วันสิ้นสุดสัญญา วันหมดอายุวีซ่า</div>
+        </div>
+        <div class="field">
+          <label>ต้องการผลงานภายใน <span class="opt">ถ้ามี</span></label>
+          <input type="date" id="f-deadline">
+          <div class="field-hint">กำหนดส่งผลงานหรือต้องการสรุปก่อนวันนี้</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: DOCUMENTS -->
+  <div class="card" data-section="5">
+    <div class="card-hdr">
+      <div class="card-num">5</div>
+      <div class="card-hdr-text">
+        <h3>เอกสารที่มี</h3>
+        <p>ทำเครื่องหมายในช่องเอกสารที่ท่านมีพร้อมแล้ว</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="note-box">
+        <strong>หมายเหตุ:</strong> ไม่จำเป็นต้องมีเอกสารครบทุกรายการในขั้นแรก ทีมทนายจะแจ้งรายการที่จำเป็นเพิ่มเติมหลังพิจารณาเรื่องของท่านแล้ว
+      </div>
+      <div class="doc-list" id="doc-list"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: PRIORITY & BUDGET -->
+  <div class="card" data-section="6">
+    <div class="card-hdr">
+      <div class="card-num">6</div>
+      <div class="card-hdr-text">
+        <h3>ระดับความเร่งด่วนและงบประมาณ</h3>
+        <p>ช่วยให้ทีมจัดลำดับความสำคัญได้ถูกต้อง</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div style="font-size:13px;font-weight:600;color:var(--slate);margin-bottom:10px">ระดับความเร่งด่วน <span style="color:var(--red)">*</span></div>
+      <div class="priority-grid" id="priority-grid">
+        <div class="pri-card" data-level="urgent" onclick="selectPri(this)">
+          <div class="pri-icon">🔴</div>
+          <div class="pri-name">เร่งด่วนมาก</div>
+          <div class="pri-desc">มีกำหนดใน 3 วัน</div>
+        </div>
+        <div class="pri-card" data-level="high" onclick="selectPri(this)">
+          <div class="pri-icon">🟠</div>
+          <div class="pri-name">เร่งด่วน</div>
+          <div class="pri-desc">ภายใน 1–2 สัปดาห์</div>
+        </div>
+        <div class="pri-card selected" data-level="normal" onclick="selectPri(this)">
+          <div class="pri-icon">🟡</div>
+          <div class="pri-name">ปกติ</div>
+          <div class="pri-desc">ภายใน 1 เดือน</div>
+        </div>
+        <div class="pri-card" data-level="low" onclick="selectPri(this)">
+          <div class="pri-icon">🟢</div>
+          <div class="pri-name">ไม่เร่งด่วน</div>
+          <div class="pri-desc">ยืดหยุ่นได้</div>
+        </div>
+      </div>
+
+      <div class="sec-lbl" style="margin-top:22px">งบประมาณ</div>
+      <div class="grid grid-2">
+        <div class="field">
+          <label>งบประมาณโดยประมาณ <span class="opt">ถ้าทราบ</span></label>
+          <select id="f-budget">
+            <option value="">ไม่ระบุ</option>
+            <option value="น้อยกว่า 10,000 บาท">น้อยกว่า 10,000 บาท</option>
+            <option value="10,000 – 30,000 บาท">10,000 – 30,000 บาท</option>
+            <option value="30,000 – 100,000 บาท">30,000 – 100,000 บาท</option>
+            <option value="100,000 – 500,000 บาท">100,000 – 500,000 บาท</option>
+            <option value="มากกว่า 500,000 บาท">มากกว่า 500,000 บาท</option>
+            <option value="ขึ้นอยู่กับการประเมิน">ขึ้นอยู่กับการประเมินทนาย</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>รูปแบบการชำระเงินที่ต้องการ <span class="opt">ถ้าทราบ</span></label>
+          <select id="f-payment">
+            <option value="">ยังไม่แน่ใจ</option>
+            <option value="จ่ายครั้งเดียว">จ่ายครั้งเดียว (Lump Sum)</option>
+            <option value="จ่ายเป็นงวด">จ่ายเป็นงวดตามผลงาน</option>
+            <option value="รายเดือน (Retainer)">รายเดือน (Retainer)</option>
+            <option value="จ่ายเมื่อชนะคดี">จ่ายเมื่อชนะคดี (ถ้ามีข้อตกลง)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: ADDITIONAL -->
+  <div class="card" data-section="7">
+    <div class="card-hdr">
+      <div class="card-num">7</div>
+      <div class="card-hdr-text">
+        <h3>ข้อมูลเพิ่มเติม</h3>
+        <p>ช่วยให้บริการของเราดียิ่งขึ้น</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-2">
+        <div class="field">
+          <label>ท่านทราบเกี่ยวกับเราจาก</label>
+          <select id="f-source">
+            <option value="">เลือก</option>
+            <option value="Facebook / Social Media">Facebook / Social Media</option>
+            <option value="YouTube / ไลฟ์สด">YouTube / ไลฟ์สด</option>
+            <option value="Google Search">Google Search</option>
+            <option value="เพื่อน/คนรู้จักแนะนำ">เพื่อน / คนรู้จักแนะนำ</option>
+            <option value="ลูกค้าเก่าแนะนำ">ลูกค้าเก่าของบริษัทแนะนำ</option>
+            <option value="นัดหมายโดยตรง">ติดต่อโดยตรง</option>
+            <option value="อื่นๆ">อื่นๆ</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>ภาษาที่ต้องการสื่อสาร <span class="req">*</span></label>
+          <select id="f-language">
+            <option value="ภาษาไทย">ภาษาไทย</option>
+            <option value="ภาษาจีน">ภาษาจีน (Chinese)</option>
+            <option value="ภาษาอังกฤษ">ภาษาอังกฤษ (English)</option>
+            <option value="ไทย + จีน">ไทย + จีน</option>
+            <option value="ไทย + อังกฤษ">ไทย + อังกฤษ</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:14px">
+        <label>ผู้แนะนำ / อ้างอิง <span class="opt">ถ้ามี</span></label>
+        <input type="text" id="f-referrer" placeholder="ชื่อผู้แนะนำหรือลูกค้าเก่าที่แนะนำมา (ถ้ามี)">
+      </div>
+
+      <div class="field" style="margin-top:14px">
+        <label>ข้อมูลหรือคำถามเพิ่มเติม <span class="opt">ถ้ามี</span></label>
+        <textarea id="f-extra" placeholder="อะไรก็ได้ที่ต้องการให้ทีมรับทราบก่อนพบกัน" rows="3"></textarea>
+      </div>
+
+      <div class="note-box" style="margin-top:18px">
+        <strong>ข้อตกลงการใช้ข้อมูล:</strong> ข้อมูลที่ท่านให้ไว้จะถูกใช้เพื่อการให้บริการทางกฎหมายแก่ท่านเท่านั้น บริษัทจะรักษาความลับของข้อมูลตามมาตรฐานวิชาชีพทนายความ
+      </div>
+
+      <label class="check-item" style="margin-top:12px;border-color:var(--gold);background:var(--gold-light)">
+        <input type="checkbox" id="f-consent" required>
+        <div><div class="check-label" style="color:var(--navy)">ข้าพเจ้ายืนยันว่าข้อมูลที่กรอกเป็นความจริง และยินยอมให้บริษัทเก็บรวบรวมข้อมูลเพื่อการให้บริการทางกฎหมาย <span style="color:var(--red)">*</span></div></div>
+      </label>
+
+      <!-- hidden internal staff fields -->
+      <input type="hidden" id="f-staff" value="">
+      <input type="hidden" id="f-assign" value="">
+      <textarea id="f-staff-note" style="display:none"></textarea>
+      <select id="f-prelim" style="display:none"><option value=""></option></select>
+    </div>
+  </div>
+
+  </form>
+
+  <!-- FOOTER -->
+  <div class="form-footer no-print">
+    <div class="form-footer-text">
+      กรอกข้อมูลครบถ้วน แล้วกด "ส่งข้อมูลให้ทีมงาน"
+    </div>
+    <div class="form-footer-actions">
+      <button class="btn btn-outline" onclick="window.print()">🖨 พิมพ์</button>
+      <button class="btn btn-outline" onclick="exportJSON()">💾 Export</button>
+      <button class="btn btn-primary" onclick="submitForm()">✓ ส่งข้อมูลให้ทีมงาน</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">✓</div>
+    <h2>บันทึกข้อมูลลูกค้าเรียบร้อยแล้ว</h2>
+    <p>ทีมผู้ประสานงานจะติดต่อกลับภายใน <strong>2 ชั่วโมง</strong> ในเวลาทำงาน<br>กรุณาเก็บรหัสอ้างอิงไว้ใช้ในการติดตามเรื่อง</p>
+    <div class="success-ref" id="success-ref">CL-20260404-001</div>
+    <p style="font-size:13px;color:var(--muted)">ข้อมูลถูกส่งถึงทีมงานแล้ว | สามารถปิดหน้านี้ได้เลย</p>
+    <div class="success-next">
+      <button class="btn btn-primary" onclick="window.print()">🖨 พิมพ์สรุป</button>
+      <button class="btn" style="background:var(--navy);color:white" onclick="newClient()">➕ รับลูกค้าคนถัดไป</button>
+      <button class="btn" style="background:#EDF2F7;color:var(--navy)" onclick="exportJSON()">💾 Export JSON</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── INIT ──
+const DOCS = [
+  { label: 'บัตรประชาชน / หนังสือเดินทาง', badge: 'required', req: true },
+  { label: 'สัญญาหรือเอกสารที่เกี่ยวข้องกับเรื่อง', badge: 'required', req: true },
+  { label: 'หลักฐานการสื่อสาร (LINE, email, จดหมาย)', badge: 'optional' },
+  { label: 'เอกสารทางการเงิน (สลิป ใบเสร็จ)', badge: 'optional' },
+  { label: 'ภาพถ่ายหรือหลักฐานอื่นๆ', badge: 'optional' },
+  { label: 'โฉนดที่ดิน / ทะเบียนบ้าน (กรณีอสังหาฯ)', badge: 'optional' },
+  { label: 'หนังสือรับรองบริษัท (กรณีนิติบุคคล)', badge: 'optional' },
+  { label: 'คำฟ้อง / หมายศาล (กรณีมีคดีแล้ว)', badge: 'optional' },
+  { label: 'ใบอนุญาตทำงาน / วีซ่าปัจจุบัน (กรณีวีซ่า/WP)', badge: 'optional' },
+];
+
+const SECTIONS = 7;
+let selectedPriority = 'normal';
+let formData = {};
+
+// Generate ref number
+function genRef() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  const rand = Math.floor(Math.random()*900)+100;
+  return `CL-${y}${m}${day}-${rand}`;
+}
+
+const REF = genRef();
+document.getElementById('ref-num').textContent = REF;
+
+// Today date
+const now = new Date();
+const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+document.getElementById('today-date').textContent =
+  `${now.getDate()} ${thMonths[now.getMonth()]} ${now.getFullYear()+543}`;
+
+// ── STEPS ──
+const stepsRow = document.getElementById('steps-row');
+for (let i = 0; i < SECTIONS; i++) {
+  const d = document.createElement('div');
+  d.className = 'step-dot';
+  d.id = `step-${i+1}`;
+  stepsRow.appendChild(d);
+}
+
+// ── DOCS ──
+const docList = document.getElementById('doc-list');
+DOCS.forEach((doc, i) => {
+  const div = document.createElement('label');
+  div.className = 'doc-item';
+  div.innerHTML = `
+    <input type="checkbox" id="doc-${i}" onchange="toggleDoc(this, ${i})">
+    <span class="doc-title">${doc.label}</span>
+    <span class="doc-badge ${doc.req ? 'required' : 'optional'}">${doc.req ? 'จำเป็น' : 'ถ้ามี'}</span>
+  `;
+  docList.appendChild(div);
+});
+
+function toggleDoc(cb, i) {
+  cb.closest('.doc-item').classList.toggle('has-doc', cb.checked);
+  updateProgress();
+}
+
+// ── PRIORITY ──
+function selectPri(el) {
+  document.querySelectorAll('.pri-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPriority = el.dataset.level;
+}
+
+// ── CHECK ITEMS ──
+document.querySelectorAll('.check-item').forEach(item => {
+  const inp = item.querySelector('input');
+  if (!inp) return;
+  inp.addEventListener('change', () => {
+    item.classList.toggle('checked', inp.checked);
+    updateProgress();
+  });
+});
+
+// ── PROGRESS ──
+const REQUIRED_FIELDS = ['f-name-th','f-nationality','f-client-type','f-phone','f-summary','f-counterparty','f-language','f-consent'];
+
+function updateProgress() {
+  let filled = 0;
+  let total = REQUIRED_FIELDS.length + 2; // +service +priority
+
+  REQUIRED_FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el.type === 'checkbox') { if (el.checked) filled++; }
+    else if (el.value.trim()) filled++;
+  });
+
+  const services = document.querySelectorAll('input[name=service]:checked');
+  if (services.length > 0) filled++;
+
+  filled++; // priority always selected
+
+  const pct = Math.round((filled / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('pct-lbl').textContent = pct + '%';
+
+  // Update steps
+  const perSection = 100 / SECTIONS;
+  for (let i = 1; i <= SECTIONS; i++) {
+    const dot = document.getElementById(`step-${i}`);
+    if (!dot) continue;
+    if (pct >= i * perSection) dot.className = 'step-dot done';
+    else if (pct >= (i-1) * perSection) dot.className = 'step-dot active';
+    else dot.className = 'step-dot';
+  }
+}
+
+document.querySelectorAll('input, select, textarea').forEach(el => {
+  el.addEventListener('change', updateProgress);
+  el.addEventListener('input', updateProgress);
+});
+
+// ── COLLECT DATA ──
+function collectFormData() {
+  const services = [...document.querySelectorAll('input[name=service]:checked')].map(el => el.value);
+  const commChannels = [...document.querySelectorAll('.check-grid input[type=checkbox]:checked')].map(el => el.value).filter(v => ['LINE','โทรศัพท์','WeChat','Email','WhatsApp','พบที่สำนักงาน'].includes(v));
+  const docs = DOCS.map((d, i) => ({ label: d.label, has: document.getElementById(`doc-${i}`)?.checked || false }));
+
+  return {
+    ref: REF,
+    submittedAt: new Date().toLocaleString('th-TH'),
+    client: {
+      nameTh: document.getElementById('f-name-th').value,
+      nameEn: document.getElementById('f-name-en').value,
+      nationality: document.getElementById('f-nationality').value,
+      type: document.getElementById('f-client-type').value,
+      idNumber: document.getElementById('f-id').value,
+      company: document.getElementById('f-company').value,
+      position: document.getElementById('f-position').value,
+    },
+    contact: {
+      phone: document.getElementById('f-phone').value,
+      line: document.getElementById('f-line').value,
+      wechat: document.getElementById('f-wechat').value,
+      email: document.getElementById('f-email').value,
+      address: document.getElementById('f-address').value,
+      channels: commChannels,
+    },
+    services,
+    case: {
+      summary: document.getElementById('f-summary').value,
+      counterparty: document.getElementById('f-counterparty').value,
+      legalStatus: document.getElementById('f-legal-status').value,
+      opponent: document.getElementById('f-opponent').value,
+      value: document.getElementById('f-value').value,
+      currency: document.getElementById('f-currency').value,
+      history: document.getElementById('f-history').value,
+      courtDate: document.getElementById('f-court-date').value,
+      deadline: document.getElementById('f-deadline').value,
+    },
+    documents: docs,
+    priority: selectedPriority,
+    budget: document.getElementById('f-budget').value,
+    payment: document.getElementById('f-payment').value,
+    additional: {
+      source: document.getElementById('f-source').value,
+      language: document.getElementById('f-language').value,
+      referrer: document.getElementById('f-referrer').value,
+      extra: document.getElementById('f-extra').value,
+    },
+    staff: {
+      name: document.getElementById('f-staff').value,
+      assign: document.getElementById('f-assign').value,
+      note: document.getElementById('f-staff-note').value,
+      prelim: document.getElementById('f-prelim').value,
+    },
+    consent: document.getElementById('f-consent').checked,
+  };
+}
+
+// ── SUBMIT ──
+const FUNCTION_URL = '/.netlify/functions/send-intake';
+
+async function submitForm() {
+  const name    = document.getElementById('f-name-th').value.trim();
+  const phone   = document.getElementById('f-phone').value.trim();
+  const summary = document.getElementById('f-summary').value.trim();
+  const consent = document.getElementById('f-consent').checked;
+
+  if (!name || !phone || !summary) {
+    alert('กรุณากรอกข้อมูลที่จำเป็น:\n• ชื่อ-นามสกุล\n• เบอร์โทรศัพท์\n• รายละเอียดเรื่อง');
+    if (!name) document.getElementById('f-name-th').focus();
+    else if (!phone) document.getElementById('f-phone').focus();
+    else document.getElementById('f-summary').focus();
+    return;
+  }
+  if (!consent) {
+    alert('กรุณายืนยันข้อตกลงการใช้ข้อมูลก่อนบันทึก');
+    document.getElementById('f-consent').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  const submitBtn = document.querySelector('.btn-primary');
+  const origText  = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '⏳ กำลังส่งข้อมูล...';
+
+  try {
+    const formData = collectFormData();
+
+    const res = await fetch(FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ formData }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+
+    document.getElementById('intake-form').style.display = 'none';
+    document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+    document.querySelector('.form-footer').style.display = 'none';
+    document.querySelector('.progress-wrap').style.display = 'none';
+    document.querySelector('.ref-box').style.display = 'none';
+
+    const sc = document.getElementById('success-screen');
+    sc.style.display = 'block';
+    document.getElementById('success-ref').textContent = REF;
+
+  } catch (err) {
+    submitBtn.textContent = origText;
+    submitBtn.disabled = false;
+    console.error('Submit error:', err);
+    alert('❌ เกิดข้อผิดพลาดในการส่งข้อมูล\n\nกรุณาลองใหม่อีกครั้ง หรือติดต่อสำนักงานโดยตรง\n\nรายละเอียด: ' + err.message);
+  }
+}
+
+// ── EXPORT ──
+function exportJSON() {
+  const data = collectFormData();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `intake_${REF}_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function saveDraft() {
+  alert('💾 กรุณากรอกฟอร์มให้ครบแล้วกด "ส่งข้อมูล" เลยครับ');
+}
+
+function clearForm() {
+  if (!confirm('ล้างข้อมูลทั้งหมด?')) return;
+  document.getElementById('intake-form').reset();
+  document.querySelectorAll('.check-item').forEach(i => i.classList.remove('checked'));
+  document.querySelectorAll('.doc-item').forEach(i => i.classList.remove('has-doc'));
+  document.querySelectorAll('.pri-card').forEach(c => c.classList.remove('selected'));
+  document.querySelector('.pri-card[data-level="normal"]').classList.add('selected');
+  selectedPriority = 'normal';
+  updateProgress();
+}
+
+function newClient() {
+  document.getElementById('success-screen').style.display = 'none';
+  document.getElementById('intake-form').style.display = '';
+  document.querySelectorAll('.card').forEach(c => c.style.display = '');
+  document.querySelector('.form-footer').style.display = '';
+  document.querySelector('.progress-wrap').style.display = '';
+  document.querySelector('.ref-box').style.display = '';
+  clearForm();
+  const newRef = genRef();
+  document.getElementById('ref-num').textContent = newRef;
+}
+
+updateProgress();
+</script>
+</body>
+</html>

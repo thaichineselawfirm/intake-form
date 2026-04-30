@@ -1,0 +1,8 @@
+{
+  "name": "intake-form",
+  "version": "1.0.0",
+  "description": "Client intake form with beautiful email + HTML attachment",
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
+}
