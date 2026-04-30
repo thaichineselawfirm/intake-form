@@ -189,7 +189,39 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { formData } = JSON.parse(event.body);
+    const body = JSON.parse(event.body);
+    const { formData, _hp1, _hp2, _ts } = body;
+
+    // ─────────────────────────────────────────────
+    //  ANTI-BOT PROTECTION
+    // ─────────────────────────────────────────────
+
+    // 1. Honeypot fields — humans can't see these, bots fill them
+    if (_hp1 || _hp2) {
+      console.log('Bot detected: honeypot filled', { _hp1, _hp2 });
+      // Pretend it succeeded so bot doesn't retry — but don't send email
+      return { statusCode: 200, body: JSON.stringify({ ok: true }) };
+    }
+
+    // 2. Time check — bots submit instantly, humans take >5 seconds minimum
+    if (typeof _ts === 'number' && _ts < 5000) {
+      console.log('Bot detected: too fast', { _ts });
+      return { statusCode: 200, body: JSON.stringify({ ok: true }) };
+    }
+
+    // 3. Basic field validation — block obviously empty/spam submissions
+    if (!formData || !formData.client?.nameTh || !formData.contact?.phone || !formData.case?.summary) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Missing required fields' }) };
+    }
+
+    // 4. Length limits — protect against payload spam
+    if (formData.case.summary.length > 5000 || formData.client.nameTh.length > 200) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Field length exceeded' }) };
+    }
+
+    // ─────────────────────────────────────────────
+    //  SEND EMAIL
+    // ─────────────────────────────────────────────
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
